@@ -2,8 +2,12 @@ services:
   app:
     build: .
     container_name: rule_engine
+    depends_on:
+      - nodered
+      - database
     environment:
-      - DATABASE_URL=postgresql://postgres:Mat_235689@localhost:5432/rule_engine?schema=public
+      - APP_PORT=3000
+      - DATABASE_URL=postgresql://postgres:Mat_235689@postgres:5432/rule_engine?schema=public
     networks:
       - develop
     ports:
@@ -27,7 +31,7 @@ services:
     networks:
       - develop
     volumes:
-      - nodered_data:/data
+      - nodered_data:/var/lib/nodered/data
     ports:
       - "1880:1880"
 
