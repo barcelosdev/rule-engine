@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Method {
+  GET
+  POST
+  PUT
+  DELETE
+}
+
+model RuleEngine {
+  id             Int     @id @default(autoincrement())
+  ruleName       String  @map("rule_name")
+  active         Boolean @default(true)
+  topicPattern   String  @map("topic_pattern") @db.VarChar(1024)
+  payloadPattern String  @map("payload_pattern") @db.VarChar(2048)
+  method         Method  @default(GET)
+  webHook        String  @map("web_hook") @db.VarChar(1024)
+}

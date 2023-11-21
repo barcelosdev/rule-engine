@@ -1,0 +1,40 @@
+services:
+  app:
+    build: .
+    container_name: rule_engine
+    environment:
+      - DATABASE_URL=postgresql://postgres:Mat_235689@localhost:5432/rule_engine?schema=public
+    networks:
+      - develop
+    ports:
+      - "3000:3000"
+  
+  database:
+    image: postgres
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=Mat_235689
+    networks:
+      - develop
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    
+  nodered:
+    image: nodered/node-red
+    container_name: nodered
+    networks:
+      - develop
+    volumes:
+      - nodered_data:/data
+    ports:
+      - "1880:1880"
+
+networks:
+  develop:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  nodered_data:
