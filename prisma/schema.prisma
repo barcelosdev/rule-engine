@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Method {
+enum HTTPMethod {
   GET
   POST
   PUT
@@ -18,11 +18,11 @@ enum Method {
 }
 
 model RuleEngine {
-  id             Int     @id @default(autoincrement())
-  ruleName       String  @map("rule_name")
-  active         Boolean @default(true)
-  topicPattern   String  @map("topic_pattern") @db.VarChar(1024)
-  payloadPattern String  @map("payload_pattern") @db.VarChar(2048)
-  method         Method  @default(GET)
-  webHook        String  @map("web_hook") @db.VarChar(1024)
+  id             Int        @id @default(autoincrement())
+  ruleName       String     @map("rule_name")
+  active         Boolean    @default(true)
+  topicPattern   String     @map("topic_pattern") @db.VarChar(1024)
+  payloadPattern String     @map("payload_pattern") @db.VarChar(2048)
+  method         HTTPMethod @default(GET)
+  webHook        String     @map("web_hook") @db.VarChar(1024)
 }
